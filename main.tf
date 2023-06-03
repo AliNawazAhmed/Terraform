@@ -23,7 +23,7 @@ resource "aws_instance" "ec2_instance" {
   key_name      = "generic-ssh"
   security_groups = [aws_security_group.bastion_sec.id]
   tags = {
-    Name = "bastion-host-tf"
+    Name = "bastion-host-tf-2"
   }
 }
 
