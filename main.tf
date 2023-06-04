@@ -7,6 +7,12 @@ terraform {
   }
 
   required_version = ">= 1.2.0"
+
+    backend "s3" {
+    bucket         	   = "tfstatefiles007"
+    key              	   = "EC2/bastion-host/terraform.tfstate"
+    region         	   = "us-west-2"
+  }
 }
 
 
