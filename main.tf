@@ -9,8 +9,8 @@ terraform {
   required_version = ">= 1.2.0"
 
     backend "s3" {
-    bucket         	   = "tfstatefiles007"
-    key              	   = "EC2/bastion-host/terraform.tfstate"
+    bucket         	   = "bastion-1"
+    key              	 = "EC2/bastion-host/terraform.tfstate"
     region         	   = "us-west-2"
   }
 }
@@ -29,7 +29,7 @@ resource "aws_instance" "ec2_instance" {
   key_name      = "generic-ssh"
   security_groups = [aws_security_group.bastion_sec.id]
   tags = {
-    Name = "bastion-host-tf-2"
+    Name = "bastion-host"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_volume_attachment" "volume_attachments" {
 
 
 resource "aws_security_group" "bastion_sec" {
-  name        = "bastion_sec"
+  name        = "bastion_host_sec"
   description = "Allow SSH"
 
 
@@ -74,3 +74,8 @@ resource "aws_security_group" "bastion_sec" {
   }
 }
 
+
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.ec2_instance.public_ip
+}
