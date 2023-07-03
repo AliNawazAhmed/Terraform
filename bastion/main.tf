@@ -47,9 +47,12 @@ resource "aws_volume_attachment" "volume_attachments" {
   stop_instance_before_detaching = true
 }
 
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
 
 resource "aws_security_group" "bastion_sec" {
-  name        = "bastion_sec"
+  name        = "bastion_sec_2"
   description = "Allow SSH"
 
 
@@ -58,7 +61,7 @@ resource "aws_security_group" "bastion_sec" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["0.0.0.0/0"]
+    cidr_blocks      = ["${chomp(data.http.myip.body)}/32"]
   }
 
   egress {
